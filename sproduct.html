@@ -78,19 +78,25 @@
         </div>
       </div>
 
-      <div class="single-pro-details">
+      <div
+        class="single-pro-details"
+        data-id="1"
+        data-name="T Shirt Nam"
+        data-price="78.00"
+        data-image="img/products/f1.jpg"
+      >
         <h6>Home / T-Shirt</h6>
         <h4>T Shirt Nam</h4>
         <h2>$78.00</h2>
-        <select>
-          <option>Size</option>
-          <option>XL</option>
-          <option>XXL</option>
-          <option>S</option>
-          <option>L</option>
+        <select id="product-size">
+          <option value="">Size</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
+          <option value="S">S</option>
+          <option value="L">L</option>
         </select>
-        <input type="number" value="1" />
-        <button class="normal">Thêm vào giỏ hàng</button>
+        <input type="number" id="product-quantity" value="1" min="1" />
+        <button class="normal" id="add-to-cart-btn">Thêm vào giỏ hàng</button>
         <h4>Chi tiết sản phẩm</h4>
         <span>
           • Chất liệu: Polyester. • Kiểu dáng cổ cuban. • Bề mặt vải được xử lý
@@ -260,6 +266,51 @@
       smallimg[3].onclick = function () {
         MainImg.src = smallimg[3].src;
       };
+    </script>
+
+    <script>
+      document
+        .getElementById("add-to-cart-btn")
+        .addEventListener("click", function () {
+          // Lấy thông tin sản phẩm
+          const productId = document
+            .querySelector(".single-pro-details")
+            .getAttribute("data-id");
+          const productName = document
+            .querySelector(".single-pro-details")
+            .getAttribute("data-name");
+          const productPrice = document
+            .querySelector(".single-pro-details")
+            .getAttribute("data-price");
+          const productImage = document
+            .querySelector(".single-pro-details")
+            .getAttribute("data-image");
+          const productSize = document.getElementById("product-size").value;
+          const productQuantity =
+            document.getElementById("product-quantity").value;
+
+          if (productSize === "") {
+            alert("Vui lòng chọn kích thước sản phẩm");
+            return;
+          }
+
+          // Tạo đối tượng sản phẩm
+          const product = {
+            id: productId,
+            name: productName,
+            price: productPrice,
+            image: productImage,
+            size: productSize,
+            quantity: productQuantity,
+          };
+
+          // Lưu sản phẩm vào localStorage
+          let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+          cartItems.push(product);
+          localStorage.setItem("cart", JSON.stringify(cartItems));
+
+          alert("Sản phẩm đã được thêm vào giỏ hàng");
+        });
     </script>
 
     <script src="script.js"></script>

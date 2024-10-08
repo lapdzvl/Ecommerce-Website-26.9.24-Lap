@@ -425,20 +425,21 @@ body {
   background-repeat: no-repeat;
   background-position: 20% 30%;
   background-color: #041e42;
+  padding: 40px 0;
 }
 
 #newsletter h4 {
   font-size: 22px;
   font-weight: 700;
   color: #fff;
-  padding: 0 20px;
+  padding: 0 80px;
 }
 
 #newsletter p {
   font-size: 14px;
   font-weight: 600;
   color: #818ea0;
-  padding: 0 20px;
+  padding: 0 80px;
 }
 
 #newsletter p span {
@@ -448,7 +449,7 @@ body {
 #newsletter .form {
   display: flex;
   width: 40%;
-  padding: 0 20px;
+  padding: 0 80px;
 }
 #newsletter input {
   height: 3.125rem;

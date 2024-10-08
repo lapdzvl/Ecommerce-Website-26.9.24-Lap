@@ -57,33 +57,7 @@
             <td>TỔNG</td>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td><i class="fa-solid fa-circle-xmark"></i><a href="#"></a></td>
-            <td><img src="img/products/f1.jpg" alt="" /></td>
-            <td>Cartoon Atronaut T-Shirts</td>
-            <td>$78</td>
-            <td><input type="number" value="1" /></td>
-            <td>$78</td>
-          </tr>
-
-          <tr>
-            <td><i class="fa-solid fa-circle-xmark"></i><a href="#"></a></td>
-            <td><img src="img/products/f2.jpg" alt="" /></td>
-            <td>Cartoon Atronaut T-Shirts</td>
-            <td>$78</td>
-            <td><input type="number" value="1" /></td>
-            <td>$78</td>
-          </tr>
-          <tr>
-            <td><i class="fa-solid fa-circle-xmark"></i><a href="#"></a></td>
-            <td><img src="img/products/f3.jpg" alt="" /></td>
-            <td>Cartoon Atronaut T-Shirts</td>
-            <td>$78</td>
-            <td><input type="number" value="1" /></td>
-            <td>$78</td>
-          </tr>
-        </tbody>
+        <tbody id="cart-items"></tbody>
       </table>
     </section>
 
@@ -101,15 +75,15 @@
         <table>
           <tr>
             <td>Tổng Tiền</td>
-            <td>$ 234</td>
+            <td id="total-price">$ 0</td>
           </tr>
           <tr>
             <td>Shipping</td>
-            <td>Free</td>
+            <td id="shipping">Free</td>
           </tr>
           <tr>
             <td><strong>Thành Tiền</strong></td>
-            <td><strong>$ 234</strong></td>
+            <td><strong id="final-price">$ 0</strong></td>
           </tr>
         </table>
         <button class="normal">Thanh Toán</button>
@@ -170,6 +144,84 @@
         <p>© 2024 Nhóm 2 -- Lập Minh Long Nam</p>
       </div>
     </footer>
+
+    <script>
+      // Hàm để hiển thị sản phẩm trong giỏ hàng
+      function displayCartItems() {
+        const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+        const cartTableBody = document.getElementById("cart-items");
+        cartTableBody.innerHTML = "";
+
+        let totalPrice = 0; // Biến để tính tổng tiền sản phẩm
+
+        cartItems.forEach((item, index) => {
+          const itemTotal = (item.price * item.quantity).toFixed(2); // Thành tiền của từng sản phẩm
+          totalPrice += parseFloat(itemTotal); // Cộng thành tiền của từng sản phẩm vào tổng tiền
+
+          const row = `
+            <tr>
+              <td><i class="fa-solid fa-circle-xmark remove-item" onclick="removeCartItem(${index})"></i></td>
+              <td><img src="${item.image}" alt="${item.name}" width="50" /></td>
+              <td>${item.name} (${item.size})</td>
+              <td>$${item.price}</td>
+              <td>
+                <input type="number" class="quantity" value="${item.quantity}" min="1" data-id="${index}" onchange="updateQuantity(${index})" />
+              </td>
+              <td>$${itemTotal}</td>
+            </tr>
+          `;
+          cartTableBody.innerHTML += row;
+        });
+
+        // Cập nhật tổng tiền và thành tiền
+        updateTotals(totalPrice);
+      }
+
+      // Hàm để cập nhật tổng tiền và thành tiền
+      function updateTotals(totalPrice) {
+        const shippingCost = 0; // Shipping miễn phí
+        const finalPrice = totalPrice + shippingCost; // Thành tiền = Tổng tiền + Shipping
+
+        // Cập nhật DOM
+        document.getElementById(
+          "total-price"
+        ).innerText = `$${totalPrice.toFixed(2)}`;
+        document.getElementById("shipping").innerText = "Free";
+        document.getElementById(
+          "final-price"
+        ).innerText = `$${finalPrice.toFixed(2)}`;
+      }
+
+      // Hàm để xóa sản phẩm khỏi giỏ hàng
+      function removeCartItem(index) {
+        let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+        cartItems.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cartItems));
+        displayCartItems(); // Cập nhật lại bảng giỏ hàng sau khi xóa
+      }
+
+      // Hàm để cập nhật số lượng sản phẩm khi người dùng thay đổi ô nhập
+      function updateQuantity(index) {
+        let cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+        const quantityInput = document.querySelector(
+          `input[data-id="${index}"]`
+        );
+        let newQuantity = parseInt(quantityInput.value);
+
+        // Kiểm tra để đảm bảo số lượng không nhỏ hơn 1
+        if (newQuantity < 1) {
+          newQuantity = 1;
+        }
+
+        // Cập nhật số lượng trong mảng sản phẩm
+        cartItems[index].quantity = newQuantity;
+        localStorage.setItem("cart", JSON.stringify(cartItems));
+        displayCartItems(); // Cập nhật lại bảng giỏ hàng sau khi thay đổi số lượng
+      }
+
+      // Gọi hàm khi trang được tải
+      window.onload = displayCartItems;
+    </script>
 
     <script src="script.js"></script>
   </body>
