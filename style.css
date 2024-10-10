@@ -968,6 +968,55 @@ footer .copyright {
   font-size: 13px;
 }
 
+/* checkout page */
+
+#checkout-section {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+#checkout-form h2 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+#checkout-form form {
+  display: flex;
+  flex-direction: column;
+}
+
+#checkout-form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+#checkout-form input,
+#checkout-form select {
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+#checkout-form button {
+  padding: 10px;
+  font-size: 18px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#checkout-form button:hover {
+  background-color: #45a049;
+}
+
 /*lap responsive ipad*/
 
 @media (max-width: 799px) {
@@ -1202,46 +1251,5 @@ footer .copyright {
 
   #about-app .video {
     width: 100%;
-  }
-
-  /* contact page  */
-
-  #contact-details {
-    flex-direction: column;
-  }
-
-  #contact-details .details {
-    width: 100%;
-    margin-bottom: 30px;
-  }
-
-  #contact-details .map {
-    width: 100%;
-  }
-
-  #form-details {
-    margin: 10px;
-    padding: 30px 10px;
-    flex-wrap: wrap;
-  }
-
-  #form-details form {
-    width: 100%;
-    margin-bottom: 30px;
-  }
-
-  /* cart page  */
-
-  #cart-add {
-    flex-direction: column;
-  }
-
-  #coupon {
-    width: 100%;
-  }
-
-  #subtotal {
-    width: 100%;
-    padding: 20px;
   }
 }

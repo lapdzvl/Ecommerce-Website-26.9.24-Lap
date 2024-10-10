@@ -86,7 +86,7 @@
             <td><strong id="final-price">$ 0</strong></td>
           </tr>
         </table>
-        <button class="normal">Thanh Toán</button>
+        <button class="normal" id="checkout-btn">Thanh Toán</button>
       </div>
     </section>
 
@@ -221,6 +221,16 @@
 
       // Gọi hàm khi trang được tải
       window.onload = displayCartItems;
+    </script>
+
+    <script>
+      document
+        .getElementById("checkout-btn")
+        .addEventListener("click", function () {
+          const totalPrice = document.getElementById("final-price").innerText;
+          localStorage.setItem("totalPrice", totalPrice);
+          window.location.href = "checkout.html";
+        });
     </script>
 
     <script src="script.js"></script>
